@@ -1,0 +1,119 @@
+<form class="order-container" (submit)="$event.preventDefault(); onSubmit()">
+    <header class="form-header">
+        <div class="header-content">
+            <h2>Registro de Orden</h2>
+        </div>
+        <p>Complete los datos requeridos para procesar la orden de compra.</p>
+        <p>
+            <b>Subtotal: </b>
+            S/ {{subtotal()}}
+        </p>
+        <p>
+            <b>Total: </b>
+            S/ {{total()}}
+        </p>
+    </header>
+
+    <section class="form-card main-info">
+        <div class="input-group">
+            <label>Número de Orden</label>
+            <input [formField]="orderForm.numero_orden" placeholder="Ej: OP-0001" />
+            <app-form-field-error [form]="orderForm" field="numero_orden" />
+        </div>
+        <!-- select para periods -->
+        <div class="input-group">
+            <label>Periodo</label>
+            <select [formField]="orderForm.period_id">
+                <option value="" disabled selected>Seleccione un periodo</option>
+        
+                @for (period of periods(); track period.id) {
+                <option [value]="period.id.toString()">
+                    {{ period.label }}
+                </option>
+                }
+            </select>
+            <app-form-field-error [form]="orderForm" field="period_id" />
+        </div>
+    </section>
+
+    <section class="items-container">
+        <div class="items-header">
+            <h3>Detalle de Ítems</h3>
+            <button type="button" (click)="additem()" class="btn-add">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path
+                        d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                </svg>
+                Agregar Producto
+            </button>
+        </div>
+
+        @for (item of orderForm.items; track $index) {
+            <div class="item-card">
+                <button type="button" class="btn-remove" (click)="deleteItem($index)" title="Eliminar ítem">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+
+                <div class="item-grid">
+                    <div class="input-group full-width-mobile">
+                        <label>Nombre del Producto</label>
+                        <input type="text" [formField]="item.nombre" placeholder="Descripción..." />
+                        <app-form-field-error [form]="item" field="nombre" />
+
+                    </div>
+
+                    <div class="input-group">
+                        <label>Cantidad</label>
+                        <input type="number" [formField]="item.cantidad" />
+                        <app-form-field-error [form]="item" field="cantidad" />
+                    </div>
+
+                    <div class="input-group">
+                        <label>Precio Unitario</label>
+                        <div class="price-input-wrapper">
+                            <span class="currency-prefix">S/</span>
+                            <input type="number" [formField]="item.precio" placeholder="0.00" />
+                            <!-- @if (item.precio().invalid() && item.precio().touched()) {
+                                <div class="error-container">
+                                    @for (error of item.precio().errors(); track error.kind) {
+                                        <span class="error-text">{{ error.message }}</span>
+                                    }
+                                </div>
+                            } -->
+                            <app-form-field-error [form]="item" field="precio" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Drops -->
+
+                <div class="drop-grid">
+                    @for (drop of item.drops; track $index) {
+                        <div class="input-group">
+                            <label> {{'Drop ' + drop.name().value() }} </label>
+                            <input type="number" [formField]="drop.quantity" />
+                            <app-form-field-error [form]="drop" field="quantity" />
+                        </div>
+                    }
+                </div>
+
+            </div>
+        }
+
+        <div class="header-content">
+            <h2>Items del signal</h2>
+        </div>
+        @for (item of orderModel().items; track $index) {
+            <div class="form-card">
+                <span> {{item | json}} </span>
+            </div>
+        }
+    </section>
+
+    <section class="submit-container">
+        <button type="submit" class="btn-submit" [disabled]="orderForm().invalid()">Registrar Orden</button>
+    </section>
+</form>
