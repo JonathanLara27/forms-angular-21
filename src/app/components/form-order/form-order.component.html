@@ -76,13 +76,6 @@
                         <div class="price-input-wrapper">
                             <span class="currency-prefix">S/</span>
                             <input type="number" [formField]="item.precio" placeholder="0.00" />
-                            <!-- @if (item.precio().invalid() && item.precio().touched()) {
-                                <div class="error-container">
-                                    @for (error of item.precio().errors(); track error.kind) {
-                                        <span class="error-text">{{ error.message }}</span>
-                                    }
-                                </div>
-                            } -->
                             <app-form-field-error [form]="item" field="precio" />
                         </div>
                     </div>

@@ -3,10 +3,11 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "start": "bun x ng serve",
+    "build": "bun x ng build --verbose ",
+    "test": "bun x ng test",
+    "lint": "bun x ng lint",
+    "watch": "ng build --watch --configuration development"
   },
   "prettier": {
     "printWidth": 100,
@@ -30,13 +31,13 @@
     "@angular/platform-browser": "^21.1.0",
     "@angular/router": "^21.1.0",
     "rxjs": "~7.8.0",
-    "socket.io-client": "^4.8.3",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
     "@angular/build": "^21.1.1",
     "@angular/cli": "^21.1.1",
     "@angular/compiler-cli": "^21.1.0",
+    "@types/bun": "^1.3.8",
     "jsdom": "^27.1.0",
     "less": "^4.2.0",
     "typescript": "~5.9.2",

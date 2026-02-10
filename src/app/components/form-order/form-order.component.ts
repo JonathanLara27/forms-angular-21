@@ -1,9 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { FormOrderService } from './form-order.service';
 import { FormField, } from '@angular/forms/signals';
 import { FormFieldErrorComponent } from '../form-field-error/form-field-error.component';
 import { FormsModule } from '@angular/forms';
+import { OrderStateService } from '../../common/services/order-state.service';
+import { DropService } from '../../common/services/drop.service';
+import { OrderFormService } from '../../common/services/order-form.service';
+import { FormOrderLogicService } from './form-order-logic.service';
 
 @Component({
   selector: 'app-form-order',
@@ -15,14 +18,19 @@ import { FormsModule } from '@angular/forms';
 
     FormFieldErrorComponent,
   ],
-  providers: [FormOrderService],
+  providers: [
+    FormOrderLogicService,
+    OrderStateService,
+    DropService,
+    OrderFormService,
+  ],
   templateUrl: './form-order.component.html',
   styleUrl: './form-order.component.less',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormOrderComponent {
 
-  private service = inject(FormOrderService);
+  private service = inject(FormOrderLogicService);
 
   public orderForm = this.service.orderForm;
 

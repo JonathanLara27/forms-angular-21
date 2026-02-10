@@ -39,36 +39,27 @@ import { Component, input, computed } from '@angular/core';
 })
 export class FormFieldErrorComponent {
 
-  // Recibes el objeto de formulario (FieldTree)
   form = input.required<any>();
-  // Recibes el nombre del campo como string
   field = input.required<string>();
 
-  // 1. Obtenemos el control específico de forma reactiva
   private control = computed(() => {
-    const f = this.form();     // Ejecutamos el input para obtener el FieldTree
-    const name = this.field(); // Ejecutamos el input para obtener el string
-    return f[name];            // Retornamos el signal del campo
+    const f = this.form();     
+    const name = this.field(); 
+    return f[name];           
   });
 
-  // 2. Verificamos si es inválido y fue tocado
   isInvalidAndTouched = computed(() => {
     const ctrl = this.control();
     if (!ctrl) return false;
-
-    // Patrón Signal Form: 
-    // ctrl() -> devuelve el estado (FieldState)
-    // .invalid() y .touched() -> son signals dentro de ese estado
     return ctrl().invalid() && ctrl().touched();
   });
 
-  // 3. Extraemos los mensajes de error
   errors = computed(() => {
     const ctrl = this.control();
     if (!ctrl) return [];
 
     const state = ctrl();
-    const errs = state.errors(); // .errors() también es un signal
+    const errs = state.errors();
 
     if (!errs) return [];
 
