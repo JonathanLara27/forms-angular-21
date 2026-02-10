@@ -62,7 +62,7 @@ export class FormOrderLogicService {
   async onSubmit() {
     // Validación usando el estado del signal form
     if (this.orderForm().invalid()) {
-      this.orderForm().markAsTouched();
+      this.orderFormService.markAsTouched();
       return;
     }
 
