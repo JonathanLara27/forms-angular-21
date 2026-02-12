@@ -11,17 +11,12 @@ export class OrderFormService {
 
     public markAsTouched() {
         this.orderForm().markAsTouched();
+        this.orderForm.items().markAsTouched();
+        
     }
 
     public resetForm() {
-        this.orderState.setOrder(
-            {
-                numero_orden: '',
-                subtotal: 0,
-                items: [],
-                period_id: '2',
-            }
-        );
+        this.orderState.resetToInitialData();
         this.orderForm().reset();
     }
 }
