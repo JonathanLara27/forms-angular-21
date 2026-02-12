@@ -1,4 +1,4 @@
-<form class="order-container" (submit)="$event.preventDefault(); onSubmit()">
+<form class="order-container" (submit)="onSubmit($event)">
     <header class="form-header">
         <div class="header-content">
             <h2>Registro de Orden</h2>
@@ -6,12 +6,18 @@
         <p>Complete los datos requeridos para procesar la orden de compra.</p>
         <p>
             <b>Subtotal: </b>
-            S/ {{subtotal()}}
+            {{ subtotal() | currency:'PEN':'S/.' }}
         </p>
         <p>
             <b>Total: </b>
-            S/ {{total()}}
+            {{ total() | currency:'PEN':'S/.' }}
         </p>
+        <!-- <div class="input-group">
+            <label class="font-bold">Total Estimado</label>
+
+            <input type="number" [value]="total()" (input)="onManualTotalEdit($event)" class="input-visual-only"
+                placeholder="Total calculado..." />
+        </div> -->
     </header>
 
     <section class="form-card main-info">
@@ -24,8 +30,6 @@
         <div class="input-group">
             <label>Periodo</label>
             <select [formField]="orderForm.period_id">
-                <option value="" disabled selected>Seleccione un periodo</option>
-        
                 @for (period of periods(); track period.id) {
                 <option [value]="period.id.toString()">
                     {{ period.label }}
@@ -50,12 +54,14 @@
 
         @for (item of orderForm.items; track $index) {
             <div class="item-card">
-                <button type="button" class="btn-remove" (click)="deleteItem($index)" title="Eliminar ítem">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
+                @if ($index > 0) {
+                    <button type="button" class="btn-remove" (click)="deleteItem($index)" title="Eliminar ítem">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                }
 
                 <div class="item-grid">
                     <div class="input-group full-width-mobile">

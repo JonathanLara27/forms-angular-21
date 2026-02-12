@@ -43,6 +43,12 @@ export class FormOrderComponent {
 
   public additem = () => this.service.addItem();
   public deleteItem = (index: number) => this.service.deleteItem(index);
-  public onSubmit = () => this.service.onSubmit();
+  public onSubmit = (event: Event) => this.service.onSubmit(event);
+  public onManualTotalEdit = (event: Event) => {
+    const input = event.target as HTMLInputElement;
+    const value = Number(input.value);
+    if (isNaN(value)) return;
+    this.service.onManualTotalEdit(value);
+  };
 
  }
