@@ -1,4 +1,4 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal, computed, linkedSignal } from '@angular/core';
 import { OrderCreate, ItemCreate, DropCreate } from '../interfaces';
 import { ORDER_INIT, PERIOD_CONFIGURATION } from '../constants';
 import { calculateSubtotal } from '../helpers/calculateSubotal';
@@ -16,12 +16,17 @@ export class OrderStateService {
 
   public subtotal = computed(() => calculateSubtotal(this.internalOrderModel().items));
 
-  public total = computed(() => {
-    const sub = this.subtotal();
-    const tax = this._ivaRate();
-    return Number((sub + (sub * tax)).toFixed(2));
+  public total = linkedSignal({
+    source: () => this.subtotal(),
+    computation: (sub) => {
+      const tax = this._ivaRate();
+      return Number((sub + (sub * tax)).toFixed(2));
+    }
   });
 
+  public onManualTotalEdit(value: number) {
+    this.total.set(value);
+  }
 
   public updateOrder(updater: (state: OrderCreate) => OrderCreate) {
     this.internalOrderModel.update(updater);
@@ -29,6 +34,10 @@ export class OrderStateService {
 
   public setOrder(order: OrderCreate) {
     this.internalOrderModel.set(order);
+  }
+
+  public resetToInitialData(){
+    this.internalOrderModel.set(ORDER_INIT);
   }
 
 
