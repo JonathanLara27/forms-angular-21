@@ -4,6 +4,7 @@ import { OrderStateService } from '../../common/services/order-state.service';
 import { DropService } from '../../common/services/drop.service';
 import { OrderFormService } from '../../common/services/order-form.service';
 import { INIT_ITEM } from '../../common/constants';
+import { submit } from '@angular/forms/signals';
 
 @Injectable()
 export class FormOrderLogicService {
@@ -46,6 +47,10 @@ export class FormOrderLogicService {
     this.orderStateService.resetItemsDrops(dropsTemplate);
   }
 
+  public onManualTotalEdit(value: number) {
+    this.orderStateService.onManualTotalEdit(value);
+  }
+
   public addItem() {
     const currentPeriodId = Number(this.orderModel().period_id);
     const newItem = this.createItemWithDrops(currentPeriodId);
@@ -59,23 +64,27 @@ export class FormOrderLogicService {
     this.orderStateService.removeItem(index);
   }
 
-  async onSubmit() {
+  async onSubmit(event: Event) {
+    event.preventDefault();
     // Validación usando el estado del signal form
     if (this.orderForm().invalid()) {
       this.orderFormService.markAsTouched();
       return;
     }
+    
+    submit(this.orderForm, async () => {
+      // Preparar payload
+      const payload: OrderCreate = {
+        ...this._orderModel(), // Raw data
+        // Aseguramos tipos correctos
+        period_id: this._orderModel().period_id,
+        subtotal: this.subtotal(),
+      };
+  
+      console.log("🚀 Payload:", payload);
+      this.orderFormService.resetForm();
 
-    // Preparar payload
-    const payload: OrderCreate = {
-      ...this._orderModel(), // Raw data
-      // Aseguramos tipos correctos
-      period_id: this._orderModel().period_id,
-      subtotal: this.subtotal(),
-    };
-
-    console.log("🚀 Payload:", payload);
-    this.orderFormService.resetForm();
+    })
   }
 
   private createItemWithDrops(periodId: number): ItemCreate {
