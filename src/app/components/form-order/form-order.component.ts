@@ -51,4 +51,10 @@ export class FormOrderComponent {
     this.service.onManualTotalEdit(value);
   };
 
- }
+  public handlePeriodChange(event: Event) {
+    const select = event.target as HTMLSelectElement;
+    const value = select.value;
+    this.service.onPeriodChange(value);
+  }
+
+}

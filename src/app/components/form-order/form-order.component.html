@@ -29,7 +29,7 @@
         <!-- select para periods -->
         <div class="input-group">
             <label>Periodo</label>
-            <select [formField]="orderForm.period_id">
+            <select [formField]="orderForm.period_id" (change)="handlePeriodChange($event)">
                 @for (period of periods(); track period.id) {
                 <option [value]="period.id.toString()">
                     {{ period.label }}

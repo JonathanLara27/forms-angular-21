@@ -28,17 +28,6 @@ export class FormOrderLogicService {
   public subtotal = this.orderStateService.subtotal;
   public total = this.orderStateService.total;
 
-  constructor() {
-    effect(() => {
-      const periodIdRaw = this.orderForm.period_id().value();
-      const periodId = Number(periodIdRaw);
-      untracked(() => {
-        if (!periodId) return;
-        this.resetDropsInItems(periodId);
-      });
-    }, { allowSignalWrites: true });
-  }
-
   private resetDropsInItems(periodId: number) {
     const dropsTemplate = this.dropService.generateDropsForPeriod(periodId);
     if (dropsTemplate.length === 0) return;
@@ -92,5 +81,11 @@ export class FormOrderLogicService {
       ...INIT_ITEM,
       drops: this.dropService.generateDropsForPeriod(periodId) // <--- Reutilización
     };
+  }
+
+  public onPeriodChange(newPeriodIdRaw: string) {
+    const periodIdNum = Number(newPeriodIdRaw);
+    if (!periodIdNum) return;
+    this.resetDropsInItems(periodIdNum);
   }
 }
