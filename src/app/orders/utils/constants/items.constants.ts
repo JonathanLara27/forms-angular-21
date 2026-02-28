@@ -1,8 +1,8 @@
 import { SchemaPathTree, min, required, minLength, applyEach } from "@angular/forms/signals";
-import { ItemCreate } from "../interfaces";
+import { ItemCreate } from "../../domain/interfaces";
 import { DropsSchema } from ".";
 
-export const INIT_ITEM : ItemCreate  = {
+export const INIT_ITEM: ItemCreate = {
     cantidad: 1,
     nombre: '',
     precio: 0,

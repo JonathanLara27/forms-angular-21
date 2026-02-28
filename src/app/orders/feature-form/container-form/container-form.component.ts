@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
-import { FormOrderComponent } from '../form-order/form-order.component';
+import { FormOrderComponent } from '../../ui/form-order/form-order.component';
 
 @Component({
   selector: 'app-container-form',
@@ -15,10 +15,10 @@ import { FormOrderComponent } from '../form-order/form-order.component';
   styleUrl: './container-form.component.less',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class ContainerFormComponent { 
+export default class ContainerFormComponent {
 
   public showChat = signal(false);
-  public textShowChat =computed(() => this.showChat() ? 'Ocultar Chat' : 'Mostrar Chat');
+  public textShowChat = computed(() => this.showChat() ? 'Ocultar Chat' : 'Mostrar Chat');
 
   public toggleShowChat() {
     this.showChat.set(!this.showChat());

@@ -1,7 +1,7 @@
 import { SchemaPathTree, min, required } from "@angular/forms/signals";
-import { DropCreate } from "../interfaces";
+import { DropCreate } from "../../domain/interfaces";
 
-export const INIT_DROP : DropCreate = {
+export const INIT_DROP: DropCreate = {
     name: '',
     month: 1,
     quantity: 0
@@ -12,7 +12,7 @@ export const PERIODS = [
     'Periodo 2',
 ]
 
-export const MONTHS : Map<number, string> = new Map([
+export const MONTHS: Map<number, string> = new Map([
     [1, 'Enero'],
     [2, 'Febrero'],
     [3, 'Marzo'],
@@ -27,8 +27,8 @@ export const MONTHS : Map<number, string> = new Map([
     [12, 'Diciembre'],
 ]);
 
-export const MONTHS_PERIOD_I = [1,2,3,4,5,6];
-export const MONTHS_PERIOD_II = [7,8,9,10,11,12];
+export const MONTHS_PERIOD_I = [1, 2, 3, 4, 5, 6];
+export const MONTHS_PERIOD_II = [7, 8, 9, 10, 11, 12];
 
 const MIN_QUANTITY = 0;
 

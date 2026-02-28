@@ -1,7 +1,7 @@
-// drop.service.ts
 import { Injectable } from '@angular/core';
-import { DropCreate } from '../interfaces';
-import { INIT_DROP, MONTHS_LIST, PERIOD_CONFIGURATION } from '../constants';
+import { MONTHS_LIST, PERIOD_CONFIGURATION } from '../../utils/constants/months.constants';
+import { DropCreate } from '../../domain/interfaces';
+import { INIT_DROP } from '../../utils/constants';
 
 @Injectable()
 export class DropService {
@@ -10,7 +10,7 @@ export class DropService {
 
     if (!period) return [];
 
-    return period.monthRange.map(monthValue => ({
+    return period.monthRange.map((monthValue: string) => ({
       name: MONTHS_LIST.find(m => m.value === monthValue)?.label ?? 'Mes desconocido',
       month: monthValue,
       quantity: INIT_DROP.quantity

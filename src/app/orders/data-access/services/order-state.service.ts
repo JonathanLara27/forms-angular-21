@@ -1,15 +1,13 @@
 import { Injectable, signal, computed, linkedSignal } from '@angular/core';
-import { OrderCreate, ItemCreate, DropCreate } from '../interfaces';
-import { ORDER_INIT, PERIOD_CONFIGURATION } from '../constants';
-import { calculateSubtotal } from '../helpers/calculateSubotal';
+import { OrderCreate, DropCreate, ItemCreate } from '../../domain/interfaces';
+import { ORDER_INIT, PERIOD_CONFIGURATION } from '../../utils/constants';
+import { calculateSubtotal } from '../../utils/helpers/calculateSubotal';
 
 @Injectable()
 export class OrderStateService {
   private readonly _ivaRate = signal(0.19);
-  // Solo accesible dentro de la carpeta de servicios
   internalOrderModel = signal<OrderCreate>(ORDER_INIT);
 
-  // Para el resto de la app, es solo lectura
   public orderModel = this.internalOrderModel.asReadonly();
   public itemsSignal = computed(() => this.internalOrderModel().items);
   public periods = signal(PERIOD_CONFIGURATION).asReadonly();
@@ -36,7 +34,7 @@ export class OrderStateService {
     this.internalOrderModel.set(order);
   }
 
-  public resetToInitialData(){
+  public resetToInitialData() {
     this.internalOrderModel.set(ORDER_INIT);
   }
 

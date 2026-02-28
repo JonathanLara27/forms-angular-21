@@ -1,8 +1,8 @@
 import { ItemSchema } from ".";
-import { OrderCreate } from "../interfaces";
+import { OrderCreate } from "../../domain/interfaces";
 import { required, pattern, SchemaPathTree, applyEach, minLength } from '@angular/forms/signals';
 
-export const ORDER_INIT : OrderCreate  = {
+export const ORDER_INIT: OrderCreate = {
     numero_orden: '',
     subtotal: 0,
     items: [],

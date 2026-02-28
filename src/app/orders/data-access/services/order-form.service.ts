@@ -1,8 +1,7 @@
-// order-form.service.ts
 import { Injectable, inject } from '@angular/core';
 import { form } from '@angular/forms/signals';
 import { OrderStateService } from './order-state.service';
-import { orderValidationSchema } from '../constants';
+import { orderValidationSchema } from '../../utils/constants';
 
 @Injectable()
 export class OrderFormService {
@@ -12,7 +11,7 @@ export class OrderFormService {
     public markAsTouched() {
         this.orderForm().markAsTouched();
         this.orderForm.items().markAsTouched();
-        
+
     }
 
     public resetForm() {

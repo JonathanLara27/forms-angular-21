@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { FormField, } from '@angular/forms/signals';
-import { FormFieldErrorComponent } from '../form-field-error/form-field-error.component';
 import { FormsModule } from '@angular/forms';
-import { OrderStateService } from '../../common/services/order-state.service';
-import { DropService } from '../../common/services/drop.service';
-import { OrderFormService } from '../../common/services/order-form.service';
+import { FormField, } from '@angular/forms/signals';
+import { DropService } from '../../data-access/services/drop.service';
+import { OrderFormService } from '../../data-access/services/order-form.service';
+import { OrderStateService } from '../../data-access/services/order-state.service';
+import { FormFieldErrorComponent } from '../form-field-error/form-field-error.component';
 import { FormOrderLogicService } from './form-order-logic.service';
 
 @Component({
