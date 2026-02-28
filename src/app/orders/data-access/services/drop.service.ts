@@ -10,7 +10,7 @@ export class DropService {
 
     if (!period) return [];
 
-    return period.monthRange.map((monthValue: string) => ({
+    return period.monthRange.map((monthValue: number) => ({
       name: MONTHS_LIST.find(m => m.value === monthValue)?.label ?? 'Mes desconocido',
       month: monthValue,
       quantity: INIT_DROP.quantity
