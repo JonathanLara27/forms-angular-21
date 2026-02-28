@@ -1,4 +1,4 @@
-import { MonthOption, PeriodConfig } from "../interfaces";
+import { MonthOption, PeriodConfig } from "../../domain/interfaces";
 
 export const MONTHS_LIST: MonthOption[] = [
     { value: 1, label: 'Enero' },
